@@ -9,8 +9,8 @@ It helps your clan or group stay updated on members’ progress — instantly an
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/osrs-group-activity-notifier.git
-cd osrs-group-activity-notifier
+git clone https://github.com/bilal-the-dev/OSRS-Group-Activity-Notifier-Discord-Bot osrsBot
+cd osrsBot
 ```
 
 ### 2. Install Dependencies
