@@ -1,26 +1,45 @@
 import { SkillMilestoneEntry } from "../typings/types.js";
+import skillEmojisJson from "../../emojis.json" with { type: "json" };
 
-export const createActivtyEmbed = (activity: SkillMilestoneEntry) => {
-  const { Username, Skill, Xp, Date: activityDate, Type } = activity;
+const untypedEmojiJSON: Record<string, string> = skillEmojisJson;
 
-  const timestamp = Math.floor(new Date(activityDate).getTime() / 1000); // UNIX in seconds
-  const readableTime = `<t:${timestamp}:f>`; // Full timestamp (e.g. "Jul 14, 2025 3:34 PM")
+export const createActivtyContent = (activity: SkillMilestoneEntry): string => {
+  const { Username, Skill, Xp, Type } = activity;
+
+  const skillKey = Skill.toLowerCase();
+  let emoji = untypedEmojiJSON[skillKey] ?? "";
 
   let restStr = "";
 
-  if (Skill.toLowerCase() === "ehp") {
-    restStr = `EHP`;
+  if (skillKey === "ehp") {
+    restStr = "EHP";
   } else if (Type === "Pvm") {
     restStr = `${Skill} kills!`;
   } else {
     restStr = `XP in ${Skill}!`;
   }
 
-  return {
-    description: `${Username} reached ${Xp.toLocaleString()} ${restStr}\n\n${readableTime}`,
-    color: 0x00ff66,
-  };
+  let content = `${Username} reached ${Xp.toLocaleString()} ${restStr}`;
+
+  const isPVM = Type === "Pvm";
+
+  if (!isPVM) {
+    let isCrownEmoji = Xp === 200_000_000 && skillKey !== "overall";
+
+    if (
+      skillKey === "overall" &&
+      (Xp === 4_600_000_000 || Xp === 4_800_000_000)
+    )
+      isCrownEmoji = true;
+
+    emoji = isCrownEmoji ? "👑👑" : emoji;
+    content += emoji;
+    if (isCrownEmoji) content = `**${content}**`;
+  }
+
+  return content;
 };
+
 export const createErrorEmbed = (error: Error) => {
   return {
     title: "⚠️ Scraper Error",

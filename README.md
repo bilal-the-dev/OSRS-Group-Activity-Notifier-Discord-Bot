@@ -61,6 +61,7 @@ npm run start
   - EHP milestones
   - Boss kill milestones (PVM)
 
+- Have your own custom emojis following the `sample.emojis.json` by creating `emojis.json`
 - ⏱ Discord timestamps using `<t:...:f>` for clean formatting
 - ✅ Lightweight & simple to host
 

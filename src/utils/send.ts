@@ -1,4 +1,4 @@
-export const sendToDiscord = async (embed: any): Promise<void> => {
+export const sendToDiscord = async (data: any): Promise<void> => {
   try {
     const url = process.env.DISCORD_WEBHOOK_URL.replace("api", "api/v10");
     const res = await fetch(url, {
@@ -6,7 +6,7 @@ export const sendToDiscord = async (embed: any): Promise<void> => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ embeds: [embed] }),
+      body: JSON.stringify(data),
     });
 
     if (!res.ok) {

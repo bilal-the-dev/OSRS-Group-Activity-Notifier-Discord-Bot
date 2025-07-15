@@ -1,6 +1,6 @@
 import { SkillMilestoneEntry } from "../typings/types.js";
 import customFetch from "./fetch.js";
-import { createActivtyEmbed, createErrorEmbed } from "./parser.js";
+import { createActivtyContent, createErrorEmbed } from "./parser.js";
 import { sendToDiscord } from "./send.js";
 
 const cachedActivites: Array<SkillMilestoneEntry> = [];
@@ -35,8 +35,9 @@ export const fetchAndProcessActivity = async (): Promise<void> => {
     console.log(`Fetched ${newActivites.length} new activities!`);
 
     for (const newActivity of newActivites) {
-      const embed = createActivtyEmbed(newActivity);
-      await sendToDiscord(embed);
+      newActivity.Xp = 4800000000;
+      const content = createActivtyContent(newActivity);
+      await sendToDiscord({ content });
       cachedActivites.push(newActivity); // add in cache after processing
     }
   } catch (error) {
@@ -45,7 +46,7 @@ export const fetchAndProcessActivity = async (): Promise<void> => {
 
     if (error instanceof Error) {
       const embed = createErrorEmbed(error);
-      await sendToDiscord(embed);
+      await sendToDiscord({ embeds: [embed] });
     }
   }
 };
