@@ -35,7 +35,6 @@ export const fetchAndProcessActivity = async (): Promise<void> => {
     console.log(`Fetched ${newActivites.length} new activities!`);
 
     for (const newActivity of newActivites) {
-      newActivity.Xp = 4800000000;
       const content = createActivtyContent(newActivity);
       await sendToDiscord({ content });
       cachedActivites.push(newActivity); // add in cache after processing
