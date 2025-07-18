@@ -40,12 +40,14 @@ export const fetchAndProcessActivity = async (): Promise<void> => {
       cachedActivites.push(newActivity); // add in cache after processing
     }
   } catch (error) {
+    console.log(error);
+
     // some error occured, while fetching or parsing the html or anything
     // we'll send logs on discord
 
     if (error instanceof Error) {
-      const embed = createErrorEmbed(error);
-      await sendToDiscord({ embeds: [embed] });
+      // const embed = createErrorEmbed(error);
+      // await sendToDiscord({ embeds: [embed] });
     }
   }
 };
